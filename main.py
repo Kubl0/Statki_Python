@@ -18,7 +18,7 @@ ILOSC_LOTNISKOWCOW = 2
 ILOSC_KRAZOWNIKOW = 2
 ILOSC_PODWODNYCH = 3
 ILOSC_TRAFIEN_P = ILOSC_PODWODNYCH+ILOSC_LOTNISKOWCOW*3+ILOSC_KRAZOWNIKOW*2
-ILOSC_RUCHOW=20
+ILOSC_RUCHOW=100
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 
@@ -200,6 +200,10 @@ def strzelanieComp(board, screen):
     x=randint(0,5)
     y=randint(0,5)
 
+    while board[y][x]=="y" or board[y][x]=="t":
+        x=randint(0,5)
+        y=randint(0,5)
+        
     if board[y][x]==5 or board[y][x]==6 or board[y][x]==7:
         wart="               TRAFIENIE!             "
         board[y][x]="t"
@@ -429,9 +433,21 @@ def checkForWin(board, screen):
             if n=="t":
                 ilosc_trafien=ilosc_trafien+1
     if ilosc_trafien==ILOSC_TRAFIEN_P:
-        screen.blit(win,(150, 150))
+        screen.blit(win,(460, 150))
         wygrana=True
     return wygrana
+
+def checkForLose(board, screen):
+
+    ilosc_trafien=0
+    lose=pygame.image.load("assets\lose.jpg")
+    for x in board:
+        for n in x: 
+            if n=="t":
+                ilosc_trafien=ilosc_trafien+1
+    if ilosc_trafien==ILOSC_TRAFIEN_P:
+        screen.blit(lose,(460, 150))
+    return ilosc_trafien
  
 
 def drawBoard(board, screen):
@@ -481,7 +497,7 @@ def main():
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if ilosc_strzalow<ILOSC_RUCHOW and checkForWin(boardComp, screen)==False:
+                if ilosc_strzalow<ILOSC_RUCHOW and checkForWin(boardComp, screen)==False and checkForLose(boardPlayer, screen)!=ILOSC_TRAFIEN_P:
                     if pygame.mouse.get_pressed()[0]:
                         pos = pygame.mouse.get_pos()
                         x=pos[0]//B_SIZE_H
@@ -508,6 +524,8 @@ def main():
         drawBoardPlayer(boardPlayer, screen)
         drawText(screen, boardComp, ilosc_strzalow, boardPlayer, ilosc_strzalow_comp)   
         checkForWin(boardComp, screen)
+        checkForLose(boardPlayer, screen)
+
 
         if ilosc_strzalow==ILOSC_RUCHOW:
             if trafienia(boardPlayer)>trafienia(boardComp):
