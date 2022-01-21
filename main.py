@@ -496,10 +496,6 @@ def main():
                         if check > 0:
                             ilosc_strzalow=ilosc_strzalow+1
                             strzelanieComp(boardPlayer, screen)
-                            if ilosc_strzalow==1:
-                                ilosc_strzalow=ilosc_strzalow+1
-                            if ilosc_strzalow_comp==1:
-                                ilosc_strzalow_comp=ilosc_strzalow_comp+1
                             ilosc_strzalow_comp=ilosc_strzalow_comp+1
                             
                         else:
