@@ -507,22 +507,6 @@ def main():
 
                         strzelanie(boardComp, pos, screen)
                         
-                        
-
-
-                                            
-            
-
-
-                                
-                            
-                            
-
-
-
-     
-                                    
-
 
         drawBoard(boardComp, screen)
         drawBoardPlayer(boardPlayer, screen)
